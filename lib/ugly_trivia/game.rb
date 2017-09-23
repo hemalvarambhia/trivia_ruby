@@ -8,6 +8,7 @@ module UglyTrivia
       @in_penalty_box = Array.new(6, nil)
 
       @pop_questions = []
+      @pop_questions = Array.new(50) { |number| "Pop Question #{number}" }
       @science_questions = []
       @sports_questions = []
       @rock_questions = []
@@ -16,7 +17,6 @@ module UglyTrivia
       @is_getting_out_of_penalty_box = false
 
       50.times do |i|
-        @pop_questions.push "Pop Question #{i}"
         @science_questions.push "Science Question #{i}"
         @sports_questions.push "Sports Question #{i}"
         @rock_questions.push create_rock_question(i)
