@@ -7,7 +7,6 @@ module UglyTrivia
       @purses = Array.new(6, 0)
       @in_penalty_box = Array.new(6, nil)
 
-      @pop_questions = []
       @pop_questions = Array.new(50) { |number| "Pop Question #{number}" }
       @science_questions = []
       @sports_questions = []
