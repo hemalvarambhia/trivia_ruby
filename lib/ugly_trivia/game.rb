@@ -1,7 +1,7 @@
 module UglyTrivia
   class Game
     attr_reader :pop_questions, :science_questions,
-                :sports_questions
+                :sports_questions, :rock_questions
     def  initialize
       @players = []
       @places = Array.new(6, 0)
@@ -11,18 +11,10 @@ module UglyTrivia
       @pop_questions = Array.new(50) { |number| "Pop Question #{number}" }
       @science_questions = Array.new(50) { |number| "Science Question #{number}" }
       @sports_questions = Array.new(50) { |number| "Sports Question #{number}" }
-      @rock_questions = []
+      @rock_questions = Array.new(50) { |number| "Rock Question #{number}" }
 
       @current_player = 0
       @is_getting_out_of_penalty_box = false
-
-      50.times do |i|
-        @rock_questions.push create_rock_question(i)
-      end
-    end
-
-    def create_rock_question(index)
-      "Rock Question #{index}"
     end
 
     def is_playable?

@@ -17,4 +17,9 @@ describe UglyTrivia::Game do
     expected = Array.new(50) { |number| "Sports Question #{number}" }
     expect(game.sports_questions).to eq expected
   end
+
+  it 'has 50 rock questions' do
+    expected = Array.new(50) { |number| "Rock Question #{number}" }
+    expect(game.rock_questions).to eq expected
+  end
 end
