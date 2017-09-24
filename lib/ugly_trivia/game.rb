@@ -2,6 +2,8 @@ module UglyTrivia
   class Game
     attr_reader :pop_questions, :science_questions,
                 :sports_questions, :rock_questions
+
+    attr_reader :places
     def  initialize
       @players = []
       @places = Array.new(6, 0)

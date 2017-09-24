@@ -24,4 +24,12 @@ describe UglyTrivia::Game do
       expect(game.rock_questions).to eq expected
     end
   end
+
+  describe 'adding a player' do
+    it 'places the player at the first square' do
+      game.add('Player 1')
+
+      expect(game.places[0]).to eq 0
+    end
+  end
 end
