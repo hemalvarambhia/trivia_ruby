@@ -9,7 +9,12 @@ describe UglyTrivia::Game do
   end
 
   it 'has 50 science questions' do
-    expected = Array.new(50) { |number| "Science Question #{number}"}
+    expected = Array.new(50) { |number| "Science Question #{number}" }
     expect(game.science_questions).to eq expected
+  end
+
+  it 'has 50 sports questions' do
+    expected = Array.new(50) { |number| "Sports Question #{number}" }
+    expect(game.sports_questions).to eq expected
   end
 end
