@@ -23,6 +23,10 @@ module UglyTrivia
       how_many_players >= 2
     end
 
+    def position_of_player(number)
+      @places[number]
+    end
+
     def add(player_name)
       @players.push player_name
       @places[how_many_players] = 0

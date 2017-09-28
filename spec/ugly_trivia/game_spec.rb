@@ -25,11 +25,16 @@ describe UglyTrivia::Game do
     end
   end
 
-  describe 'adding a player' do
-    it 'places the player at the first square' do
-      game.add('Player 1')
+  describe '#roll' do
+    context 'given the player is not in the penalty' do
+      it 'moves the places the number of places as shown on the die' do
+        game.add 'Player 1'
+        game.add 'Player 2'
 
-      expect(game.places[0]).to eq 0
+        game.roll(6)
+
+        expect(game.position_of_player(0)).to eq 6
+      end
     end
   end
 end
