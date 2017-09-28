@@ -1,7 +1,8 @@
 module UglyTrivia
   class Game
     attr_reader :pop_questions, :science_questions,
-                :sports_questions, :rock_questions
+                :sports_questions, :rock_questions,
+                :current_player
 
     attr_reader :places
     def  initialize

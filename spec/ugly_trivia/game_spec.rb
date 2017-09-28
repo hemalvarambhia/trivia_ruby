@@ -35,6 +35,18 @@ describe UglyTrivia::Game do
 
         expect(game.position_of_player(0)).to eq 6
       end
+
+      context 'when they answer correctly' do
+        it 'is the next players turn' do
+          game.add 'Player 1'
+          game.add 'Player 2'
+
+          game.roll(6)
+          game.was_correctly_answered
+
+          expect(game.current_player).to eq 1
+        end
+      end
     end
   end
 end
