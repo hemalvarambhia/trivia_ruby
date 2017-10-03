@@ -117,5 +117,25 @@ describe UglyTrivia::Game do
         end
       end
     end
+
+    context 'questions' do
+      context 'when a player is at the start' do
+        it 'asks them a pop question' do
+          expect { game.roll 0 }.to output(/The category is Pop/).to_stdout
+        end
+      end
+
+      context 'when a player is on the 4th place' do
+        it 'asks them a Pop question' do
+          expect { game.roll 4 }.to output(/The category is Pop/).to_stdout
+        end
+      end
+
+      context 'when a player is on the 8th place' do
+        it 'asks them a Pop question' do
+          expect { game.roll 4 }.to output(/The category is Pop/).to_stdout
+        end
+      end
+    end
   end
 end
