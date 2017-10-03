@@ -75,22 +75,23 @@ describe UglyTrivia::Game do
 
         game.roll(3)
         game.was_correctly_answered
+
+        game.roll(5)
       end
       
       context 'and they answer the question correctly' do
         it 'means they are still in the penalty box' do
-          game.roll(5)
           expect { game.was_correctly_answered }
             .not_to change { game.in_penalty_box?(0) }.from true
         end
 
         it 'awards them a gold coin' do
-          game.roll(5)
-          
           expect { game.was_correctly_answered }
             .to change { game.gold_coins_awarded_to(0) }.by 1
         end
       end
+
+      
     end
   end
 end
