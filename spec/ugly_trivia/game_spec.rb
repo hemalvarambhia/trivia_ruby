@@ -52,9 +52,8 @@ describe UglyTrivia::Game do
 
       context 'when they answer incorrectly' do
         it 'places them in the penalty box' do
-          game.wrong_answer
-          
-          expect(game.in_penalty_box?(0)).to eq true
+          expect { game.wrong_answer }
+            .to change { game.in_penalty_box?(0) }.from(nil).to eq true
         end
 
         it 'does not award them any gold coins' do
