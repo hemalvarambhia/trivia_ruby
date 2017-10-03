@@ -172,6 +172,12 @@ describe UglyTrivia::Game do
           expect { game.roll 10 }.to result_in_a_question_on('Sports')
         end
       end
+
+      context 'when the player is on the 3rd place' do
+        it 'asks them a Rock question' do
+          expect { game.roll 3 }.to result_in_a_question_on('Rock')
+        end
+      end
     end
 
     def result_in_a_question_on(category)
