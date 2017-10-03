@@ -75,31 +75,45 @@ describe UglyTrivia::Game do
 
         game.roll(3)
         game.was_correctly_answered
-
-        game.roll(5)
-      end
-      
-      context 'and they answer the question correctly' do
-        it 'means they are still in the penalty box' do
-          expect { game.was_correctly_answered }
-            .not_to change { game.in_penalty_box?(0) }.from true
-        end
-
-        it 'awards them a gold coin' do
-          expect { game.was_correctly_answered }
-            .to change { game.gold_coins_awarded_to(0) }.by 1
-        end
       end
 
-      context 'and they still answer incorrectly' do
-        it 'does not award them any gold coins' do
-          expect { game.wrong_answer }
-            .not_to change { game.gold_coins_awarded_to(0) }
+      context 'and they roll an odd number' do
+        it 'does not ask them a question' do
+          expect { game.roll(5) }.to output(/The category is.*/).to_stdout 
+        end
+        
+        context 'and they answer the question correctly' do
+          before(:each) { game.roll(5) }
+          
+          it 'means they are still in the penalty box' do
+            expect { game.was_correctly_answered }
+              .not_to change { game.in_penalty_box?(0) }.from true
+          end
+
+          it 'awards them a gold coin' do
+            expect { game.was_correctly_answered }
+              .to change { game.gold_coins_awarded_to(0) }.by 1
+          end
         end
 
-        it 'keeps them in the penalty box' do
-          expect { game.wrong_answer }
-            .not_to change { game.in_penalty_box?(0) }.from true
+        context 'and they still answer incorrectly' do
+          before(:each) { game.roll(5) }
+          
+          it 'does not award them any gold coins' do
+            expect { game.wrong_answer }
+              .not_to change { game.gold_coins_awarded_to(0) }
+          end
+
+          it 'keeps them in the penalty box' do
+            expect { game.wrong_answer }
+              .not_to change { game.in_penalty_box?(0) }.from true
+          end
+        end
+      end
+
+      context 'and they roll an even number' do
+        it 'does not ask them a question' do
+          expect { game.roll(6) }.not_to output(/The category is.*/).to_stdout 
         end
       end
     end
