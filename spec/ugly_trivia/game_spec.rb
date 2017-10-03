@@ -31,7 +31,7 @@ describe UglyTrivia::Game do
       game.add 'Player 2'
     end
     
-    context 'given the player is not in the penalty box' do
+    context 'when the player is not in the penalty box' do
       before(:each) { game.roll(6) }
 
       it 'moves the places the number of places as shown on the die' do
