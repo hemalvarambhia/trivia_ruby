@@ -56,8 +56,14 @@ describe UglyTrivia::Game do
           expect(game.in_penalty_box?(0)).to eq true
         end
 
+        it 'does not award them any gold coins' do
+          expect { game.wrong_answer }
+            .not_to change { game.gold_coins_awarded_to(0) }
+        end
+        
         it "is now the next player's turn" do
-          expect { game.wrong_answer }.to change { game.current_player }.from(0).to 1
+          expect { game.wrong_answer }
+            .to change { game.current_player }.from(0).to 1
         end
       end
     end
