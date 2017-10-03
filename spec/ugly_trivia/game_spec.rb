@@ -26,21 +26,26 @@ describe UglyTrivia::Game do
   end
 
   describe '#roll' do
-    context 'given the player is not in the penalty' do
+    before(:each) do
+      game.add 'Player 1'
+      game.add 'Player 2'
+    end
+    context 'given the player is not in the penalty box' do
       it 'moves the places the number of places as shown on the die' do
-        game.add 'Player 1'
-        game.add 'Player 2'
-
         game.roll(6)
 
         expect(game.position_of_player(0)).to eq 6
       end
 
       context 'when they answer correctly' do
+        it 'awards the winning player a gold coin' do
+          game.roll(6)
+          
+          expect { game.was_correctly_answered }.to(
+            change { game.gold_coins_awarded_to_player(0) }.by 1)
+        end
+        
         it 'is the next players turn' do
-          game.add 'Player 1'
-          game.add 'Player 2'
-
           game.roll(6)
           game.was_correctly_answered
 

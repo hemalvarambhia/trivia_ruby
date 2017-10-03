@@ -28,6 +28,10 @@ module UglyTrivia
       @places[number]
     end
 
+    def gold_coins_awarded_to_player(player_number)
+      @purses[player_number]
+    end
+
     def add(player_name)
       @players.push player_name
       @places[how_many_players] = 0
