@@ -91,7 +91,17 @@ describe UglyTrivia::Game do
         end
       end
 
-      
+      context 'and they still answer incorrectly' do
+        it 'does not award them any gold coins' do
+          expect { game.wrong_answer }
+            .not_to change { game.gold_coins_awarded_to(0) }
+        end
+
+        it 'keeps them in the penalty box' do
+          expect { game.wrong_answer }
+            .not_to change { game.in_penalty_box?(0) }.from true
+        end
+      end
     end
   end
 end
