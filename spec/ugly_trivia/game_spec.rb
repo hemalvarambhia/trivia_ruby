@@ -136,6 +136,12 @@ describe UglyTrivia::Game do
           expect { game.roll 4 }.to output(/The category is Pop/).to_stdout
         end
       end
+
+      context 'when the player is on the 1st place' do
+        it 'asks them a Science question' do
+          expect { game.roll 1 }.to output(/The category is Science/).to_stdout
+        end
+      end
     end
   end
 end
