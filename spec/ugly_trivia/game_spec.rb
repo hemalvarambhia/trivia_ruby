@@ -55,6 +55,10 @@ describe UglyTrivia::Game do
           
           expect(game.in_penalty_box?(0)).to eq true
         end
+
+        it "is now the next player's turn" do
+          expect { game.wrong_answer }.to change { game.current_player }.from(0).to 1
+        end
       end
     end
   end
