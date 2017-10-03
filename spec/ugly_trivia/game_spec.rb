@@ -34,18 +34,26 @@ describe UglyTrivia::Game do
     
     context 'given the player is not in the penalty box' do
       it 'moves the places the number of places as shown on the die' do
-        expect(game.position_of_player(0)).to eq 6
+        expect(game.current_position_of(0)).to eq 6
       end
 
       context 'when they answer correctly' do
         it 'awards them a gold coin' do
           expect { game.was_correctly_answered }
-            .to change { game.gold_coins_awarded_to_player(0) }.by 1
+            .to change { game.gold_coins_awarded_to(0) }.by 1
         end
         
         it 'is the next players turn' do
           expect { game.was_correctly_answered }
             .to change { game.current_player }.from(0).to 1
+        end
+      end
+
+      context 'when they answer incorrectly' do
+        it 'places them in the penalty box' do
+          game.wrong_answer
+          
+          expect(game.in_penalty_box?(0)).to eq true
         end
       end
     end

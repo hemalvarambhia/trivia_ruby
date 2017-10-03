@@ -24,12 +24,16 @@ module UglyTrivia
       how_many_players >= 2
     end
 
-    def position_of_player(number)
-      @places[number]
+    def current_position_of(player)
+      @places[player]
     end
 
-    def gold_coins_awarded_to_player(player_number)
-      @purses[player_number]
+    def gold_coins_awarded_to(player)
+      @purses[player]
+    end
+
+    def in_penalty_box?(player)
+      @in_penalty_box[player]
     end
 
     def add(player_name)
