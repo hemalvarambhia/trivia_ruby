@@ -29,10 +29,11 @@ describe UglyTrivia::Game do
     before(:each) do
       game.add 'Player 1'
       game.add 'Player 2'
-      game.roll(6)
     end
     
     context 'given the player is not in the penalty box' do
+      before(:each) { game.roll(6) }
+
       it 'moves the places the number of places as shown on the die' do
         expect(game.current_position_of(0)).to eq 6
       end
@@ -64,6 +65,31 @@ describe UglyTrivia::Game do
         it "is now the next player's turn" do
           expect { game.wrong_answer }
             .to change { game.current_player }.from(0).to 1
+        end
+      end
+    end
+
+    context 'when the player is in the penalty box' do
+      before(:each) do
+        game.roll(4)
+        game.wrong_answer
+
+        game.roll(3)
+        game.was_correctly_answered
+      end
+      
+      context 'and they answer the question correctly' do
+        it 'means they are still in the penalty box' do
+          game.roll(5)
+          expect { game.was_correctly_answered }
+            .not_to change { game.in_penalty_box?(0) }.from true
+        end
+
+        it 'awards them a gold coin' do
+          game.roll(5)
+          
+          expect { game.was_correctly_answered }
+            .to change { game.gold_coins_awarded_to(0) }.by 1
         end
       end
     end
