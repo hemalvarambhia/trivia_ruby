@@ -154,6 +154,24 @@ describe UglyTrivia::Game do
           expect { game.roll 9 }.to result_in_a_question_on('Science')
         end
       end
+
+      context 'when the player is on the 2nd place' do
+        it 'asks them a Sports question' do
+          expect { game.roll 2 }.to result_in_a_question_on('Sports')
+        end
+      end
+
+      context 'when the player is on the 6th place' do
+        it 'asks them a Sports question' do
+          expect { game.roll 6 }.to result_in_a_question_on('Sports')
+        end
+      end
+
+      context 'when the player is on the 10th place' do
+        it 'asks them a Sports question' do
+          expect { game.roll 10 }.to result_in_a_question_on('Sports')
+        end
+      end
     end
 
     def result_in_a_question_on(category)
