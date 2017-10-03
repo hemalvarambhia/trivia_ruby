@@ -121,27 +121,43 @@ describe UglyTrivia::Game do
     context 'questions' do
       context 'when a player is at the start' do
         it 'asks them a pop question' do
-          expect { game.roll 0 }.to output(/The category is Pop/).to_stdout
+          expect { game.roll 0 }.to result_in_a_question_on('Pop')
         end
       end
 
       context 'when a player is on the 4th place' do
         it 'asks them a Pop question' do
-          expect { game.roll 4 }.to output(/The category is Pop/).to_stdout
+          expect { game.roll 4 }.to result_in_a_question_on('Pop')
         end
       end
 
       context 'when a player is on the 8th place' do
         it 'asks them a Pop question' do
-          expect { game.roll 4 }.to output(/The category is Pop/).to_stdout
+          expect { game.roll 4 }.to result_in_a_question_on('Pop')
         end
       end
 
       context 'when the player is on the 1st place' do
         it 'asks them a Science question' do
-          expect { game.roll 1 }.to output(/The category is Science/).to_stdout
+          expect { game.roll 1 }.to result_in_a_question_on('Science')
         end
       end
+
+      context 'when the player is on the 5th place' do
+        it 'asks them a Science question' do
+          expect { game.roll 5 }.to result_in_a_question_on('Science')
+        end
+      end
+
+      context 'when the player is on the 9th place' do
+        it 'asks them a Science question' do
+          expect { game.roll 9 }.to result_in_a_question_on('Science')
+        end
+      end
+    end
+
+    def result_in_a_question_on(category)
+      output(/The category is #{category}/).to_stdout
     end
   end
 end
