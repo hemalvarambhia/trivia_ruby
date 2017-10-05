@@ -178,6 +178,18 @@ describe UglyTrivia::Game do
           expect { game.roll 3 }.to result_in_a_question_on('Rock')
         end
       end
+
+      context 'when the player is on the 7th place' do
+        it 'asks them a Rock question' do
+          expect { game.roll 7 }.to result_in_a_question_on('Rock')
+        end
+      end
+
+      context 'when the player is on the 11th place' do
+        it 'asks them a Rock question' do
+          expect { game.roll 11 }.to result_in_a_question_on('Rock')
+        end
+      end
     end
 
     def result_in_a_question_on(category)
