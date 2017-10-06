@@ -30,6 +30,14 @@ describe UglyTrivia::Game do
       game.add 'Player 1'
       game.add 'Player 2'
     end
+
+    context "when the player rolls 12" do
+      it 'moves them back to the 1st place' do
+        game.roll 12
+
+        expect(game.current_position_of(0)).to eq 0
+      end
+    end
     
     context 'when the player is not in the penalty box' do
       before(:each) { game.roll(6) }
