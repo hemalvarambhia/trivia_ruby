@@ -57,7 +57,10 @@ module UglyTrivia
       puts "They have rolled a #{roll}"
 
       if @in_penalty_box[@current_player]
-        if roll.odd?
+        if roll.even?
+          puts "#{@players[@current_player]} is not getting out of the penalty box"
+          @is_getting_out_of_penalty_box = false
+        else
           @is_getting_out_of_penalty_box = true
 
           puts "#{@players[@current_player]} is getting out of the penalty box"
@@ -67,11 +70,7 @@ module UglyTrivia
           puts "#{@players[@current_player]}'s new location is #{@places[@current_player]}"
           puts "The category is #{current_category}"
           ask_question
-        else
-          puts "#{@players[@current_player]} is not getting out of the penalty box"
-          @is_getting_out_of_penalty_box = false
-          end
-
+        end
       else
 
         @places[@current_player] = @places[@current_player] + roll
