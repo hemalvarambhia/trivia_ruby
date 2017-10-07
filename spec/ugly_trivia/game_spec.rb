@@ -100,7 +100,7 @@ describe UglyTrivia::Game do
       end
 
       context 'and they roll an odd number' do
-        it 'does not ask them a question' do
+        it 'asks them a question' do
           expect { game.roll(5) }.to output(/The category is.*/).to_stdout 
         end
         
