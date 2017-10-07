@@ -149,6 +149,11 @@ describe UglyTrivia::Game do
             .not_to change { game.is_getting_out_of_penalty_box }
             .from(false)
         end
+
+        it 'does not change their current place in the game' do
+          expect { game.roll(6) }
+            .not_to change { game.current_position_of(0) }
+        end
       end
     end
 
