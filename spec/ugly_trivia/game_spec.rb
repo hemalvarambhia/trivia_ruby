@@ -103,6 +103,12 @@ describe UglyTrivia::Game do
         it 'asks them a question' do
           expect { game.roll(5) }.to output(/The category is.*/).to_stdout 
         end
+
+        it 'allows them to get out of the penalty box' do
+          expect { game.roll(3) }
+            .to change { game.is_getting_out_of_penalty_box }
+            .from(false).to(true)
+        end
         
         context 'and they answer the question correctly' do
           before(:each) { game.roll(5) }
@@ -136,6 +142,12 @@ describe UglyTrivia::Game do
       context 'and they roll an even number' do
         it 'does not ask them a question' do
           expect { game.roll(6) }.not_to output(/The category is.*/).to_stdout 
+        end
+
+        it 'does not allow them to leave the penalty box' do
+          expect { game.roll(6) }
+            .not_to change { game.is_getting_out_of_penalty_box }
+            .from(false)
         end
       end
     end

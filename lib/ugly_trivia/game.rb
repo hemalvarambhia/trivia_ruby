@@ -2,7 +2,7 @@ module UglyTrivia
   class Game
     attr_reader :pop_questions, :science_questions,
                 :sports_questions, :rock_questions,
-                :current_player
+                :current_player, :is_getting_out_of_penalty_box
 
     attr_reader :places
     def  initialize
