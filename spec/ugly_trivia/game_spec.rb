@@ -60,6 +60,11 @@ describe UglyTrivia::Game do
         expect(game.current_position_of(0)).to eq 6
       end
 
+      it 'asks them a question' do
+        expect { game.roll(3) }
+          .to output(/Question \d+/).to_stdout
+      end
+
       context 'when they answer correctly' do
         it 'awards them a gold coin' do
           expect { game.was_correctly_answered }
@@ -75,7 +80,8 @@ describe UglyTrivia::Game do
       context 'when they answer incorrectly' do
         it 'places them in the penalty box' do
           expect { game.wrong_answer }
-            .to change { game.in_penalty_box?(0) }.from(nil).to eq true
+            .to change { game.in_penalty_box?(0) }
+            .from(nil).to eq true
         end
 
         it 'does not award them any gold coins' do
@@ -101,7 +107,8 @@ describe UglyTrivia::Game do
 
       context 'and they roll an odd number' do
         it 'asks them a question' do
-          expect { game.roll(5) }.to output(/The category is.*/).to_stdout 
+          expect { game.roll(5) }
+            .to output(/Question \d+/).to_stdout
         end
 
         it 'allows them to get out of the penalty box' do
