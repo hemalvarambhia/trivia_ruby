@@ -61,8 +61,7 @@ describe UglyTrivia::Game do
       end
 
       it 'asks them a question' do
-        expect { game.roll(3) }
-          .to output(/Question \d+/).to_stdout
+        expect { game.roll(3) }.to output(/Question \d+/).to_stdout
       end
 
       context 'when they answer correctly' do
@@ -107,8 +106,7 @@ describe UglyTrivia::Game do
 
       context 'and they roll an odd number' do
         it 'asks them a question' do
-          expect { game.roll(5) }
-            .to output(/Question \d+/).to_stdout
+          expect { game.roll(5) }.to output(/Question \d+/).to_stdout
         end
 
         it 'allows them to get out of the penalty box' do
