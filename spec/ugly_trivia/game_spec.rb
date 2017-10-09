@@ -146,7 +146,7 @@ describe UglyTrivia::Game do
 
       context 'and they roll an even number' do
         it 'does not ask them a question' do
-          expect { game.roll(6) }.not_to output(/The category is.*/).to_stdout 
+          expect { game.roll(6) }.not_to output(/Question \d/).to_stdout 
         end
 
         it 'does not allow them to leave the penalty box' do
