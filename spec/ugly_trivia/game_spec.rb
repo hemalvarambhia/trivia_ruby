@@ -240,4 +240,14 @@ describe UglyTrivia::Game do
       output(/The category is #{category}/).to_stdout
     end
   end
+
+  describe '#wrong_answer' do
+    context 'when player 1 has had their turn' do
+      it "is player 2's turn"
+    end
+
+    context "when player 2 has had their turn" do
+      it "is player 1's turn again"
+    end
+  end
 end
