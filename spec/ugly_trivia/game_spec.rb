@@ -281,8 +281,22 @@ describe UglyTrivia::Game do
     end
 
     context 'when the player in the penalty box' do
-      context 'and they cannot leave it' do
-        it "is the next player's turn"
+      before(:each) do
+        game.roll(4) # Player 1's turn
+	game.was_correctly_answered
+        game.roll(5) # Player 2's turn
+        game.wrong_answer
+        game.roll(5) # Player 1's turn again
+        game.was_correctly_answered
+      end
+
+      context 'and they are not leaving it' do
+      	before(:each) { game.roll(6) }
+
+        it "is the next player's turn" do
+	  expect { game.was_correctly_answered }
+            .to change { game.current_player }.from(1).to(0)
+        end
       end
     end
   end
