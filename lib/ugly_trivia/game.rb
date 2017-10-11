@@ -132,19 +132,23 @@ module UglyTrivia
     end
 
     def wrong_answer
-  		puts 'Question was incorrectly answered'
-  		puts "#{@players[@current_player]} was sent to the penalty box"
-  		@in_penalty_box[@current_player] = true
+      puts 'Question was incorrectly answered'
+      puts "#{@players[@current_player]} was sent to the penalty box"
+      @in_penalty_box[@current_player] = true
 
-      @current_player += 1
-      @current_player = 0 if @current_player == @players.length
-  		return true
+      next_players_turn
+      return true
     end
 
   private
 
     def did_player_win
       !(@purses[@current_player] == 6)
+    end
+
+    def next_players_turn
+      @current_player += 1
+      @current_player = 0 if @current_player == how_many_players
     end
   end
 end
