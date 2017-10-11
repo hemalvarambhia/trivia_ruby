@@ -114,9 +114,6 @@ module UglyTrivia
           @current_player = 0 if @current_player == @players.length
           true
         end
-
-
-
       else
 
         puts "Answer was corrent!!!!"
