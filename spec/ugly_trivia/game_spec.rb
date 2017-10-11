@@ -127,6 +127,11 @@ describe UglyTrivia::Game do
             expect { game.was_correctly_answered }
               .to change { game.gold_coins_awarded_to(0) }.by 1
           end
+ 
+          it 'is the next players turn' do
+            expect { game.was_correctly_answered }
+              .to change { game.current_player }.to eq 1
+          end
         end
 
         context 'and they still answer incorrectly' do
@@ -265,6 +270,19 @@ describe UglyTrivia::Game do
         game.wrong_answer
 
 	expect(game.current_player).to eq 0
+      end
+    end
+  end
+
+  describe '#was_correctly_answered' do
+    before(:each) do
+      game.add('Player 1')
+      game.add('Player 2')
+    end
+
+    context 'when the player in the penalty box' do
+      context 'and they cannot leave it' do
+        it "is the next player's turn"
       end
     end
   end
