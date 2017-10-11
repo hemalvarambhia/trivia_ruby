@@ -242,12 +242,30 @@ describe UglyTrivia::Game do
   end
 
   describe '#wrong_answer' do
+    before(:each) do
+      game.add('Player 1')
+      game.add('Player 2')
+    end
+
     context 'when player 1 has had their turn' do
-      it "is player 2's turn"
+      it "is player 2's turn" do
+      	game.roll 4
+
+        game.wrong_answer
+
+        expect(game.current_player).to eq 1
+      end
     end
 
     context "when player 2 has had their turn" do
-      it "is player 1's turn again"
+      it "is player 1's turn again" do
+      	game.roll 4
+        game.wrong_answer
+        game.roll 4
+        game.wrong_answer
+
+	expect(game.current_player).to eq 0
+      end
     end
   end
 end
