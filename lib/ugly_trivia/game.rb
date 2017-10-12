@@ -1,29 +1,38 @@
 module UglyTrivia
   class Game
-    attr_reader :pop_questions, :science_questions,
-                :sports_questions, :rock_questions,
-                :current_player, :is_getting_out_of_penalty_box
-
+    attr_reader :current_player, :is_getting_out_of_penalty_box
     attr_reader :places
-    def  initialize
+    
+    def initialize
       @players = []
       @places = Array.new(6, 0)
       @purses = Array.new(6, 0)
       @in_penalty_box = Array.new(6, nil)
-
-      @pop_questions = Array.new(50) { |number| "Pop Question #{number}" }
-      @science_questions = Array.new(50) { |number| "Science Question #{number}" }
-      @sports_questions = Array.new(50) { |number| "Sports Question #{number}" }
-      @rock_questions = Array.new(50) { |number| "Rock Question #{number}" }
       @questions =
         {
-          'Pop'     => @pop_questions,
-          'Science' => @science_questions,
-          'Sports'  => @sports_questions,
-          'Rock'    => @rock_questions
+          'Pop'     => Array.new(50) { |number| "Pop Question #{number}" },
+          'Science' => Array.new(50) { |number| "Science Question #{number}" },
+          'Sports'  => Array.new(50) { |number| "Sports Question #{number}" },
+          'Rock'    => Array.new(50) { |number| "Rock Question #{number}" }
         }
       @current_player = 0
       @is_getting_out_of_penalty_box = false
+    end
+
+    def pop_questions
+      @questions['Pop']
+    end
+
+    def science_questions
+      @questions['Science']
+    end
+
+    def sports_questions
+      @questions['Sports']
+    end
+
+    def rock_questions
+      @questions['Rock']
     end
 
     def is_playable?
