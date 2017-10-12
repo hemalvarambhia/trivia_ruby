@@ -242,7 +242,7 @@ describe UglyTrivia::Game do
     end
 
     def result_in_a_question_on(category)
-      output(/The category is #{category}/).to_stdout
+      output(/#{category} Question \d+/).to_stdout
     end
   end
 
