@@ -1,13 +1,19 @@
 module UglyTrivia
   class Game
     attr_reader :current_player, :is_getting_out_of_penalty_box
-    attr_reader :places
+    attr_reader :places, :categories
     
     def initialize
       @players = []
       @places = Array.new(6, 0)
       @purses = Array.new(6, 0)
       @in_penalty_box = Array.new(6, nil)
+      @categories =
+        {
+          0 => 'Pop', 4 => 'Pop', 8 => 'Pop',
+          1 => 'Science', 5 => 'Science', 9 => 'Science',
+          2 => 'Sports', 6 => 'Sports', 10 => 'Sports'
+        }
       @questions =
         {
           'Pop'     => Array.new(50) { |number| "Pop Question #{number}" },
@@ -97,14 +103,7 @@ module UglyTrivia
     end
 
     def current_category
-      categories =
-        {
-          0 => 'Pop', 4 => 'Pop', 8 => 'Pop',
-          1 => 'Science', 5 => 'Science', 9 => 'Science',
-          2 => 'Sports', 6 => 'Sports', 10 => 'Sports'
-        }
-
-      categories.fetch(@places[@current_player], 'Rock')
+      @categories.fetch(@places[@current_player], 'Rock')
     end
 
   public
