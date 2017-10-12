@@ -246,6 +246,12 @@ describe UglyTrivia::Game do
         expect { game.roll 4 }.to ask(/Science Question 1/)
         expect { game.roll 4 }.to ask(/Science Question 2/)
       end
+
+      it 'throws away the question once it has been asked' do
+        expect { game.roll 1 }
+          .to change { game.science_questions.size }.by(-1)
+        expect(game.science_questions.first).to eq 'Science Question 1'
+      end
     end
 
     def ask(question)
