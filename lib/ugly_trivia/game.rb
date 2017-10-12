@@ -15,7 +15,13 @@ module UglyTrivia
       @science_questions = Array.new(50) { |number| "Science Question #{number}" }
       @sports_questions = Array.new(50) { |number| "Sports Question #{number}" }
       @rock_questions = Array.new(50) { |number| "Rock Question #{number}" }
-
+      @questions =
+        {
+          'Pop'     => @pop_questions,
+          'Science' => @science_questions,
+          'Sports'  => @sports_questions,
+          'Rock'    => @rock_questions
+        }
       @current_player = 0
       @is_getting_out_of_penalty_box = false
     end
@@ -75,13 +81,10 @@ module UglyTrivia
       ask_question
     end
 
-  private
+    private
 
     def ask_question
-      puts @pop_questions.shift if current_category == 'Pop'
-      puts @science_questions.shift if current_category == 'Science'
-      puts @sports_questions.shift if current_category == 'Sports'
-      puts @rock_questions.shift if current_category == 'Rock'
+      puts @questions[current_category].shift
     end
 
     def current_category

@@ -239,6 +239,17 @@ describe UglyTrivia::Game do
           expect { game.roll 11 }.to result_in_a_question_on('Rock')
         end
       end
+
+      #TODO - improve description of the behaviour
+      it 'can asks questions in succession' do
+        expect { game.roll 1 }.to ask(/Science Question 0/)
+        expect { game.roll 4 }.to ask(/Science Question 1/)
+        expect { game.roll 4 }.to ask(/Science Question 2/)
+      end
+    end
+
+    def ask(question)
+      output(question).to_stdout
     end
 
     def result_in_a_question_on(category)
