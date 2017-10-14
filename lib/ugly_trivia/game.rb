@@ -112,27 +112,27 @@ module UglyTrivia
       if @in_penalty_box[@current_player]
         if @is_getting_out_of_penalty_box
           puts 'Answer was correct!!!!'
-          @purses[@current_player] += 1
-          puts "#{@players[@current_player]} now has #{@purses[@current_player]} Gold Coins."
+          award_gold_coin_to(@current_player)
 
           winner = did_player_win()
           next_players_turn
 
           winner
         else
+          winner = did_player_win
           next_players_turn
-          true
+          
+          winner
         end
       else
 
         puts "Answer was corrent!!!!"
-        @purses[@current_player] += 1
-        puts "#{@players[@current_player]} now has #{@purses[@current_player]} Gold Coins."
+        award_gold_coin_to(@current_player)
 
         winner = did_player_win
         next_players_turn
 
-        return winner
+        winner
       end
     end
 
@@ -145,15 +145,20 @@ module UglyTrivia
       return true
     end
 
-  private
+    private
 
     def did_player_win
-      !(@purses[@current_player] == 6)
+      @purses[@current_player] < 6
     end
 
     def next_players_turn
       @current_player += 1
       @current_player = 0 if @current_player == how_many_players
+    end
+
+    def award_gold_coin_to(player)
+      @purses[player] += 1
+      puts "#{@players[player]} now has #{@purses[player]} Gold Coins."
     end
   end
 end
