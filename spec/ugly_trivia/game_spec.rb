@@ -31,6 +31,31 @@ describe UglyTrivia::Game do
       game.add 'Player 2'
     end
 
+    it 'declares the first player to win 6 gold coins the winner' do
+      5.times do
+        game.roll(4)
+        game.was_correctly_answered
+        game.roll(3)
+        game.wrong_answer
+      end
+      game.roll(5)
+      
+      expect(game.was_correctly_answered).to be false
+    end
+
+    context 'when the players have fewer than 6 coins' do
+      it 'declares that there is no winner' do
+        4.times do
+          game.roll(6)
+          game.was_correctly_answered
+          game.roll(5)
+          game.was_correctly_answered
+        end
+        
+        expect(game.was_correctly_answered).to be true
+      end
+    end
+    
     context "when the player rolls more than 11" do
       it 'moves them back 12 places' do
         game.roll 12
@@ -295,6 +320,11 @@ describe UglyTrivia::Game do
     before(:each) do
       game.add('Player 1')
       game.add('Player 2')
+    end
+
+    it 'awards the player a gold coin' do
+      expect { game.was_correctly_answered }
+        .to change { game.gold_coins_awarded_to(0) }.by(1)
     end
 
     context 'when the player in the penalty box' do
