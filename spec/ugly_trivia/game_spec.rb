@@ -322,11 +322,6 @@ describe UglyTrivia::Game do
       game.add('Player 2')
     end
 
-    it 'awards the player a gold coin' do
-      expect { game.was_correctly_answered }
-        .to change { game.gold_coins_awarded_to(0) }.by(1)
-    end
-
     context 'when the player in the penalty box' do
       before(:each) do
         game.roll(4) # Player 1's turn
