@@ -189,81 +189,81 @@ describe UglyTrivia::Game do
     context 'questions' do
       context 'when a player is at the start' do
         it 'asks them a pop question' do
-          expect { game.roll 0 }.to result_in_a_question_on('Pop')
+          expect { game.roll 0 }.to result_in_a('Pop Question')
         end
       end
 
       context 'when a player is on the 4th place' do
         it 'asks them a Pop question' do
-          expect { game.roll 4 }.to result_in_a_question_on('Pop')
+          expect { game.roll 4 }.to result_in_a('Pop Question')
         end
       end
 
       context 'when a player is on the 8th place' do
         it 'asks them a Pop question' do
-          expect { game.roll 4 }.to result_in_a_question_on('Pop')
+          expect { game.roll 4 }.to result_in_a('Pop Question')
         end
       end
 
       context 'when the player is on the 1st place' do
         it 'asks them a Science question' do
-          expect { game.roll 1 }.to result_in_a_question_on('Science')
+          expect { game.roll 1 }.to result_in_a('Science Question')
         end
       end
 
       context 'when the player is on the 5th place' do
         it 'asks them a Science question' do
-          expect { game.roll 5 }.to result_in_a_question_on('Science')
+          expect { game.roll 5 }.to result_in_a('Science Question')
         end
       end
 
       context 'when the player is on the 9th place' do
         it 'asks them a Science question' do
-          expect { game.roll 9 }.to result_in_a_question_on('Science')
+          expect { game.roll 9 }.to result_in_a('Science Question')
         end
       end
 
       context 'when the player is on the 2nd place' do
         it 'asks them a Sports question' do
-          expect { game.roll 2 }.to result_in_a_question_on('Sports')
+          expect { game.roll 2 }.to result_in_a('Sports Question')
         end
       end
 
       context 'when the player is on the 6th place' do
         it 'asks them a Sports question' do
-          expect { game.roll 6 }.to result_in_a_question_on('Sports')
+          expect { game.roll 6 }.to result_in_a('Sports Question')
         end
       end
 
       context 'when the player is on the 10th place' do
         it 'asks them a Sports question' do
-          expect { game.roll 10 }.to result_in_a_question_on('Sports')
+          expect { game.roll 10 }.to result_in_a('Sports Question')
         end
       end
 
       context 'when the player is on the 3rd place' do
         it 'asks them a Rock question' do
-          expect { game.roll 3 }.to result_in_a_question_on('Rock')
+          expect { game.roll 3 }.to result_in_a('Rock Question')
         end
       end
 
       context 'when the player is on the 7th place' do
         it 'asks them a Rock question' do
-          expect { game.roll 7 }.to result_in_a_question_on('Rock')
+          expect { game.roll 7 }.to result_in_a('Rock Question')
         end
       end
 
       context 'when the player is on the 11th place' do
         it 'asks them a Rock question' do
-          expect { game.roll 11 }.to result_in_a_question_on('Rock')
+          expect { game.roll 11 }.to result_in_a('Rock Question')
         end
       end
 
       #TODO - improve description of the behaviour
       it 'can asks questions in succession' do
-        expect { game.roll 1 }.to ask(/Science Question 0/)
-        expect { game.roll 4 }.to ask(/Science Question 1/)
-        expect { game.roll 4 }.to ask(/Science Question 2/)
+        expect { game.roll 1 }.to result_in('Science Question 0')
+        expect { game.roll 4 }.to result_in('Science Question 1')
+        expect { game.roll 4 }.to result_in('Science Question 2')
       end
 
       it 'throws away the question once it has been asked' do
@@ -273,12 +273,12 @@ describe UglyTrivia::Game do
       end
     end
 
-    def ask(question)
-      output(question).to_stdout
+    def result_in(question)
+      output(Regexp.new question).to_stdout
     end
 
-    def result_in_a_question_on(category)
-      output(/#{category} Question \d+/).to_stdout
+    def result_in_a(kind_of_question)
+      output(Regexp.new kind_of_question).to_stdout
     end
   end
 
