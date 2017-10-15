@@ -56,7 +56,7 @@ describe UglyTrivia::Game do
       end
     end
     
-    context "when the player rolls more than 11" do
+    context 'when the player goes beyond 11 place' do
       it 'moves them back 12 places' do
         game.roll 12
 
