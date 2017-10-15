@@ -88,10 +88,7 @@ module UglyTrivia
         end
       end
 
-      @places[@current_player] = @places[@current_player] + roll
-      @places[@current_player] = @places[@current_player] - 12 if @places[@current_player] > 11
-
-      puts "#{@players[@current_player]}'s new location is #{@places[@current_player]}"
+      move(player: @current_player, roll: roll)
       puts "The category is #{current_category}"
       ask_question
     end
@@ -147,6 +144,12 @@ module UglyTrivia
     def award_gold_coin_to(player)
       @purses[player] += 1
       puts "#{@players[player]} now has #{@purses[player]} Gold Coins."
+    end
+
+    def move(player:, roll:)
+      @places[player] = @places[player] + roll
+      @places[player] = @places[player] - 12 if @places[player] > 11
+      puts "#{@players[player]}'s new location is #{@places[player]}"
     end
   end
 end
