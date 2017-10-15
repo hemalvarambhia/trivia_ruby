@@ -149,7 +149,7 @@ describe UglyTrivia::Game do
  
           it 'is the next players turn' do
             expect { game.was_correctly_answered }
-              .to change { game.current_player }.to eq 1
+              .to change { game.current_player }.from(0).to 1
           end
         end
 
@@ -286,16 +286,6 @@ describe UglyTrivia::Game do
     before(:each) do
       game.add('Player 1')
       game.add('Player 2')
-    end
-
-    context 'when player 1 has had their turn' do
-      it "is player 2's turn" do
-      	game.roll 4
-
-        game.wrong_answer
-
-        expect(game.current_player).to eq 1
-      end
     end
 
     context "when player 2 has had their turn" do
