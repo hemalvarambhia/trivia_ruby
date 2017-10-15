@@ -62,20 +62,6 @@ describe UglyTrivia::Game do
 
         expect(game.current_position_of(0)).to eq 0
       end
-
-      context 'and they are in the penalty box' do
-        before(:each) do
-          game.roll 6
-          game.wrong_answer
-          game.roll 4
-          game.was_correctly_answered
-          game.roll 7
-        end
-
-        it 'moves them back 12 places' do
-          expect(game.current_position_of(0)).to eq 1
-        end
-      end
     end
     
     context 'when the player is not in the penalty box' do
