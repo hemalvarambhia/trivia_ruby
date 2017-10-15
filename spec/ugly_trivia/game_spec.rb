@@ -55,6 +55,14 @@ describe UglyTrivia::Game do
         expect(game.was_correctly_answered).to be true
       end
     end
+
+    context 'when the player gets to precisely 11th place' do
+      it 'does not move them back 12 places' do
+        game.roll 11
+        
+        expect(game.current_position_of(0)).to eq 11
+      end
+    end
     
     context 'when the player goes beyond 11 place' do
       it 'moves them back 12 places' do
