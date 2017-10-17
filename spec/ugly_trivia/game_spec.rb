@@ -111,6 +111,18 @@ describe UglyTrivia::Game do
           expect { game.wrong_answer }
             .to change { game.current_player }.from(0).to 1
         end
+
+        context "when player 2 has had their turn" do
+          before(:each) do
+            game.wrong_answer
+            game.roll 4
+          end
+
+          it "is player 1's turn again" do
+	    expect { game.wrong_answer }
+              .to change { game.current_player }.from(1).to 0
+          end
+        end
       end
     end
 
@@ -279,24 +291,6 @@ describe UglyTrivia::Game do
 
     def result_in_a(kind_of_question)
       output(Regexp.new kind_of_question).to_stdout
-    end
-  end
-
-  describe '#wrong_answer' do
-    before(:each) do
-      game.add('Player 1')
-      game.add('Player 2')
-    end
-
-    context "when player 2 has had their turn" do
-      it "is player 1's turn again" do
-      	game.roll 4
-        game.wrong_answer
-        game.roll 4
-        game.wrong_answer
-
-	expect(game.current_player).to eq 0
-      end
     end
   end
 
