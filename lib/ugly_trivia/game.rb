@@ -4,11 +4,7 @@ module UglyTrivia
     attr_reader :places, :categories
     
     def initialize
-      @players = []
       @contestants = []
-      @places = Array.new(6, 0)
-      @purses = Array.new(6, 0)
-      @in_penalty_box = Array.new(6, nil)
       @categories =
         {
           0 => 'Pop', 4 => 'Pop', 8 => 'Pop',
@@ -47,38 +43,34 @@ module UglyTrivia
     end
 
     def current_position_of(player)
-      @places[player]
+      @contestants[player].place
     end
 
     def gold_coins_awarded_to(player)
-      @purses[player]
+      @contestants[player].gold_coins
     end
 
     def in_penalty_box?(player)
-      @in_penalty_box[player]
+      @contestants[player].in_penalty_box?
     end
 
     def add(player_name)
-      @players.push player_name
-      @places[how_many_players] = 0
-      @purses[how_many_players] = 0
-      @in_penalty_box[how_many_players] = false
       @contestants.push Contestant.new(name: player_name)
       puts "#{player_name} was added"
-      puts "They are player number #{@players.length}"
+      puts "They are player number #{how_many_players}"
 
       true
     end
 
     def how_many_players
-      @players.length
+      @contestants.count
     end
 
     def roll(roll)
       puts "#{current_player_name} is the current player"
       puts "They have rolled a #{roll}"
 
-      if in_penalty_box?(@current_player)
+      if in_penalty_box?(current_player)
         if roll.even?
           puts "#{current_player_name} is not getting out of the penalty box"
           @is_getting_out_of_penalty_box = false
@@ -89,7 +81,7 @@ module UglyTrivia
         end
       end
 
-      move(player: @current_player, roll: roll)
+      move(player: current_player, roll: roll)
       puts "The category is #{current_category}"
       ask_question
     end
@@ -101,13 +93,14 @@ module UglyTrivia
     end
 
     def current_category
-      @categories.fetch(@places[@current_player], 'Rock')
+      current_position = @contestants[current_player].place
+      @categories.fetch(current_position, 'Rock')
     end
 
   public
 
     def was_correctly_answered
-      if in_penalty_box?(@current_player)
+      if in_penalty_box?(current_player)
         if @is_getting_out_of_penalty_box
           puts 'Answer was correct!!!!'
           award_gold_coin_to(@current_player)
@@ -125,7 +118,7 @@ module UglyTrivia
     def wrong_answer
       puts 'Question was incorrectly answered'
       puts "#{current_player_name} was sent to the penalty box"
-      place_in_penalty_box(@current_player)
+      place_in_penalty_box(current_player)
 
       next_players_turn
       return true
@@ -134,7 +127,7 @@ module UglyTrivia
     private
 
     def place_in_penalty_box(player)
-      @in_penalty_box[player] = true
+      @contestants[player].place_in_penalty_box
     end
 
     def did_player_win
@@ -143,22 +136,25 @@ module UglyTrivia
 
     def next_players_turn
       @current_player += 1
-      @current_player = 0 if @current_player == how_many_players
+      @current_player = 0 if current_player == how_many_players
     end
 
     def award_gold_coin_to(player)
-      @purses[player] += 1
-      puts "#{@players[player]} now has #{@purses[player]} Gold Coins."
+      @contestants[player].award_gold_coin
+      puts "#{name_of(player)} now has #{gold_coins_awarded_to(player)} Gold Coins."
     end
 
     def move(player:, roll:)
-      @places[player] = @places[player] + roll
-      @places[player] = @places[player] - 12 if @places[player] > 11
-      puts "#{@players[player]}'s new location is #{@places[player]}"
+      @contestants[player].move(roll)
+
     end
 
     def current_player_name
-      @players[@current_player]
+      @contestants[current_player].to_s
+    end
+
+    def name_of(player)
+      @contestants[player].to_s
     end
 
     class Contestant
@@ -168,7 +164,7 @@ module UglyTrivia
         @name = name
         @place = 0
         @purse = 0
-        @in_penalty_box = false
+        @in_penalty_box = nil
       end
 
       def place_in_penalty_box
@@ -189,7 +185,7 @@ module UglyTrivia
 
       def move(places)
         @place += places
-        @place =- 12 if @place > 11
+        @place -= 12 if @place > 11
       end
 
       def to_s
