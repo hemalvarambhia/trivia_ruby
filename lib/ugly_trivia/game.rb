@@ -133,7 +133,7 @@ module UglyTrivia
     private
 
     def did_player_win
-      @purses[current_player] < 6
+      gold_coins_awarded_to(current_player) < 6
     end
 
     def next_players_turn
@@ -143,7 +143,7 @@ module UglyTrivia
 
     def award_gold_coin_to(player)
       @purses[player] += 1
-      puts "#{name_of(player)} now has #{@purses[player]} Gold Coins."
+      puts "#{name_of(player)} now has #{gold_coins_awarded_to(player)} Gold Coins."
     end
 
     def move(player:, roll:)
