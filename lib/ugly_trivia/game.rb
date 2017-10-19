@@ -5,6 +5,7 @@ module UglyTrivia
     
     def initialize
       @players = []
+      @contestants = []
       @places = Array.new(6, 0)
       @purses = Array.new(6, 0)
       @in_penalty_box = Array.new(6, nil)
@@ -62,7 +63,7 @@ module UglyTrivia
       @places[how_many_players] = 0
       @purses[how_many_players] = 0
       @in_penalty_box[how_many_players] = false
-
+      @contestants.push Contestant.new(name: player_name)
       puts "#{player_name} was added"
       puts "They are player number #{@players.length}"
 
@@ -74,17 +75,17 @@ module UglyTrivia
     end
 
     def roll(roll)
-      puts "#{@players[@current_player]} is the current player"
+      puts "#{current_player_name} is the current player"
       puts "They have rolled a #{roll}"
 
-      if @in_penalty_box[@current_player]
+      if in_penalty_box?(@current_player)
         if roll.even?
-          puts "#{@players[@current_player]} is not getting out of the penalty box"
+          puts "#{current_player_name} is not getting out of the penalty box"
           @is_getting_out_of_penalty_box = false
           return
         else
           @is_getting_out_of_penalty_box = true
-          puts "#{@players[@current_player]} is getting out of the penalty box"
+          puts "#{current_player_name} is getting out of the penalty box"
         end
       end
 
@@ -106,7 +107,7 @@ module UglyTrivia
   public
 
     def was_correctly_answered
-      if @in_penalty_box[@current_player]
+      if in_penalty_box?(@current_player)
         if @is_getting_out_of_penalty_box
           puts 'Answer was correct!!!!'
           award_gold_coin_to(@current_player)
@@ -123,14 +124,18 @@ module UglyTrivia
 
     def wrong_answer
       puts 'Question was incorrectly answered'
-      puts "#{@players[@current_player]} was sent to the penalty box"
-      @in_penalty_box[@current_player] = true
+      puts "#{current_player_name} was sent to the penalty box"
+      place_in_penalty_box(@current_player)
 
       next_players_turn
       return true
     end
 
     private
+
+    def place_in_penalty_box(player)
+      @in_penalty_box[player] = true
+    end
 
     def did_player_win
       @purses[@current_player] < 6
@@ -150,6 +155,46 @@ module UglyTrivia
       @places[player] = @places[player] + roll
       @places[player] = @places[player] - 12 if @places[player] > 11
       puts "#{@players[player]}'s new location is #{@places[player]}"
+    end
+
+    def current_player_name
+      @players[@current_player]
+    end
+
+    class Contestant
+      attr_reader :place
+      
+      def initialize(name:)
+        @name = name
+        @place = 0
+        @purse = 0
+        @in_penalty_box = false
+      end
+
+      def place_in_penalty_box
+        @in_penalty_box = true
+      end
+
+      def in_penalty_box?
+        @in_penalty_box
+      end
+      
+      def gold_coins
+        @purse
+      end
+
+      def award_gold_coin
+        @purse += 1
+      end
+
+      def move(places)
+        @place += places
+        @place =- 12 if @place > 11
+      end
+
+      def to_s
+        @name
+      end
     end
   end
 end
