@@ -138,7 +138,7 @@ module UglyTrivia
     end
 
     def did_player_win
-      @purses[@current_player] < 6
+      gold_coins_awarded_to(current_player) < 6
     end
 
     def next_players_turn
