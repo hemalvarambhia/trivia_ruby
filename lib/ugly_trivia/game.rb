@@ -117,14 +117,14 @@ module UglyTrivia
       end
 
       winner = did_player_win
-      next_players_turn      
+      next_players_turn
       winner
     end
 
     def wrong_answer
       puts 'Question was incorrectly answered'
       puts "#{name_of(current_player)} was sent to the penalty box"
-      @in_penalty_box[current_player] = true
+      place_in_penalty_box(current_player)
 
       next_players_turn
       return true
@@ -148,12 +148,16 @@ module UglyTrivia
 
     def move(player:, roll:)
       @places[player] = @places[player] + roll
-      @places[player] = @places[player] - 12 if @places[player] > 11
-      puts "#{name_of(player)}'s new location is #{@places[player]}"
+      @places[player] = @places[player] - 12 if current_position_of(player) > 11
+      puts "#{name_of(player)}'s new location is #{current_position_of(player)}"
     end
 
     def is_in_penalty_box?(player)
       @in_penalty_box[player]
+    end
+
+    def place_in_penalty_box(player)
+      @in_penalty_box[player] = true
     end
 
     def name_of(player)
