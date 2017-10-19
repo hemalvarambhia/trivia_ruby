@@ -163,5 +163,37 @@ module UglyTrivia
     def name_of(player)
       @players[player]
     end
+
+    class Contestant
+      attr_reader :place, :name
+      
+      def initialize(name)
+        @name = name
+        @purse = 0
+        @place = 0
+        @in_penalty_box = false
+      end
+
+      def move(number_of_places)
+        @place += number_of_places
+        @place -= 12 if @place > 11
+      end
+
+      def award_gold_coin
+        @purse += 1
+      end
+
+      def in_penalty_box?
+        @in_penalty_box
+      end
+
+      def place_in_penalty_box
+        @in_penalty_box = true
+      end
+
+      def won?
+        @purse == 6
+      end
+    end
   end
 end
