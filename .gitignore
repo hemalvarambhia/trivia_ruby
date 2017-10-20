@@ -8,6 +8,7 @@ coverage/*
 
 # User-specific stuff:
 .idea/**/workspace.xml
+.idea/**/vcs.xml
 .idea/**/tasks.xml
 .idea/dictionaries
 
@@ -62,7 +63,6 @@ fabric.properties
 .idea/*.iml
 .idea/modules.xml
 .idea/misc.xml
-.idea/vcs.xml
  *.ipr
 
 # Sonarlint plugin
