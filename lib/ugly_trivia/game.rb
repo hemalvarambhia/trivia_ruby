@@ -41,38 +41,6 @@ module UglyTrivia
       @questions['Rock']
     end
 
-    def is_playable?
-      how_many_players >= 2
-    end
-
-    def current_position_of(player)
-      @places[player]
-    end
-
-    def gold_coins_awarded_to(player)
-      @purses[player]
-    end
-
-    def in_penalty_box?(player)
-      @in_penalty_box[player]
-    end
-
-    def add(player_name)
-      @players.push player_name
-      @places[how_many_players] = 0
-      @purses[how_many_players] = 0
-      @in_penalty_box[how_many_players] = false
-
-      puts "#{player_name} was added"
-      puts "They are player number #{@players.length}"
-
-      true
-    end
-
-    def how_many_players
-      @players.length
-    end
-
     def roll(roll)
       puts "#{name_of(current_player)} is the current player"
       puts "They have rolled a #{roll}"
@@ -128,6 +96,38 @@ module UglyTrivia
 
       next_players_turn
       return true
+    end
+
+    def is_playable?
+      how_many_players >= 2
+    end
+
+    def add(player_name)
+      @players.push player_name
+      @places[how_many_players] = 0
+      @purses[how_many_players] = 0
+      @in_penalty_box[how_many_players] = false
+
+      puts "#{player_name} was added"
+      puts "They are player number #{@players.length}"
+
+      true
+    end
+
+    def how_many_players
+      @players.length
+    end
+
+    def current_position_of(player)
+      @places[player]
+    end
+
+    def gold_coins_awarded_to(player)
+      @purses[player]
+    end
+
+    def in_penalty_box?(player)
+      @in_penalty_box[player]
     end
 
     private
