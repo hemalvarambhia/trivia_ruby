@@ -5,6 +5,7 @@ module UglyTrivia
     
     def initialize
       @players = []
+      @contestants = []
       @places = Array.new(6, 0)
       @purses = Array.new(6, 0)
       @in_penalty_box = Array.new(6, nil)
@@ -107,7 +108,7 @@ module UglyTrivia
       @places[how_many_players] = 0
       @purses[how_many_players] = 0
       @in_penalty_box[how_many_players] = false
-
+      @contestants.push(Contestant.new(player_name))
       puts "#{player_name} was added"
       puts "They are player number #{@players.length}"
 
@@ -143,12 +144,14 @@ module UglyTrivia
 
     def award_gold_coin_to(player)
       @purses[player] += 1
+      @contestants[player].award_gold_coin
       puts "#{name_of(player)} now has #{gold_coins_awarded_to(player)} Gold Coins."
     end
 
     def move(player:, roll:)
       @places[player] = @places[player] + roll
       @places[player] = @places[player] - 12 if current_position_of(player) > 11
+      @contestants[player].move(roll)
       puts "#{name_of(player)}'s new location is #{current_position_of(player)}"
     end
 
@@ -158,6 +161,7 @@ module UglyTrivia
 
     def place_in_penalty_box(player)
       @in_penalty_box[player] = true
+      @contestants[player].place_in_penalty_box
     end
 
     def name_of(player)
