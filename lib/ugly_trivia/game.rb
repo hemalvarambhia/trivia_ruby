@@ -4,11 +4,7 @@ module UglyTrivia
     attr_reader :places, :categories
     
     def initialize
-      @players = []
       @contestants = []
-      @places = Array.new(6, 0)
-      @purses = Array.new(6, 0)
-      @in_penalty_box = Array.new(6, nil)
       @categories =
         {
           0 => 'Pop', 4 => 'Pop', 8 => 'Pop',
@@ -105,19 +101,15 @@ module UglyTrivia
     end
 
     def add(player_name)
-      @players.push player_name
-      @places[how_many_players] = 0
-      @purses[how_many_players] = 0
-      @in_penalty_box[how_many_players] = false
       @contestants.push(Contestant.new(player_name))
       puts "#{player_name} was added"
-      puts "They are player number #{@players.length}"
+      puts "They are player number #{@contestants.length}"
 
       true
     end
 
     def how_many_players
-      @players.length
+      @contestants.count
     end
 
     def current_position_of(player)
