@@ -69,7 +69,8 @@ module UglyTrivia
     end
 
     def current_category
-      @categories.fetch(@places[current_player], 'Rock')
+      place = @contestants[current_player].place
+      @categories.fetch(place, 'Rock')
     end
 
   public
@@ -120,15 +121,15 @@ module UglyTrivia
     end
 
     def current_position_of(player)
-      @places[player]
+      @contestants[player].place
     end
 
     def gold_coins_awarded_to(player)
-      @purses[player]
+      @contestants[player].purse
     end
 
     def in_penalty_box?(player)
-      @in_penalty_box[player]
+      @contestants[player].in_penalty_box?
     end
 
     private
@@ -143,39 +144,35 @@ module UglyTrivia
     end
 
     def award_gold_coin_to(player)
-      @purses[player] += 1
       @contestants[player].award_gold_coin
       puts "#{name_of(player)} now has #{gold_coins_awarded_to(player)} Gold Coins."
     end
 
     def move(player:, roll:)
-      @places[player] = @places[player] + roll
-      @places[player] = @places[player] - 12 if current_position_of(player) > 11
       @contestants[player].move(roll)
       puts "#{name_of(player)}'s new location is #{current_position_of(player)}"
     end
 
     def is_in_penalty_box?(player)
-      @in_penalty_box[player]
+      @contestants[player].in_penalty_box?
     end
 
     def place_in_penalty_box(player)
-      @in_penalty_box[player] = true
       @contestants[player].place_in_penalty_box
     end
 
     def name_of(player)
-      @players[player]
+      @contestants[player].name
     end
 
     class Contestant
-      attr_reader :place, :name
+      attr_reader :purse, :place, :name
       
       def initialize(name)
         @name = name
         @purse = 0
         @place = 0
-        @in_penalty_box = false
+        @in_penalty_box = nil
       end
 
       def move(number_of_places)
