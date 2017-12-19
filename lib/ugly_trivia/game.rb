@@ -39,29 +39,29 @@ module UglyTrivia
     end
 
     def roll(roll)
-      puts "#{name_of(current_player)} is the current player"
-      puts "They have rolled a #{roll}"
+      display "#{name_of(current_player)} is the current player"
+      display "They have rolled a #{roll}"
 
       if is_in_penalty_box?(current_player)
         if roll.even?
-          puts "#{name_of(current_player)} is not getting out of the penalty box"
+          display "#{name_of(current_player)} is not getting out of the penalty box"
           @is_getting_out_of_penalty_box = false
           return
         else
           @is_getting_out_of_penalty_box = true
-          puts "#{name_of(current_player)} is getting out of the penalty box"
+          display "#{name_of(current_player)} is getting out of the penalty box"
         end
       end
 
       move(player: current_player, roll: roll)
-      puts "The category is #{current_category}"
+      display "The category is #{current_category}"
       ask_question
     end
 
     private
 
     def ask_question
-      puts @questions[current_category].shift
+      display @questions[current_category].shift
     end
 
     def current_category
@@ -74,11 +74,11 @@ module UglyTrivia
     def was_correctly_answered
       if is_in_penalty_box?(current_player)
         if @is_getting_out_of_penalty_box
-          puts 'Answer was correct!!!!'
+          display 'Answer was correct!!!!'
           award_gold_coin_to(current_player)
         end
       else
-        puts "Answer was corrent!!!!"
+        display "Answer was corrent!!!!"
         award_gold_coin_to(current_player)
       end
 
@@ -88,8 +88,8 @@ module UglyTrivia
     end
 
     def wrong_answer
-      puts 'Question was incorrectly answered'
-      puts "#{name_of(current_player)} was sent to the penalty box"
+      display 'Question was incorrectly answered'
+      display "#{name_of(current_player)} was sent to the penalty box"
       place_in_penalty_box(current_player)
 
       next_players_turn
@@ -102,8 +102,8 @@ module UglyTrivia
 
     def add(player_name)
       @contestants.push(Contestant.new(player_name))
-      puts "#{player_name} was added"
-      puts "They are player number #{@contestants.length}"
+      display "#{player_name} was added"
+      display "They are player number #{@contestants.length}"
 
       true
     end
@@ -137,12 +137,12 @@ module UglyTrivia
 
     def award_gold_coin_to(player)
       @contestants[player].award_gold_coin
-      puts "#{name_of(player)} now has #{gold_coins_awarded_to(player)} Gold Coins."
+      display "#{name_of(player)} now has #{gold_coins_awarded_to(player)} Gold Coins."
     end
 
     def move(player:, roll:)
       @contestants[player].move(roll)
-      puts "#{name_of(player)}'s new location is #{current_position_of(player)}"
+      display "#{name_of(player)}'s new location is #{current_position_of(player)}"
     end
 
     def is_in_penalty_box?(player)
@@ -155,6 +155,10 @@ module UglyTrivia
 
     def name_of(player)
       @contestants[player].name
+    end
+
+    def display(message)
+      puts message
     end
 
     class Contestant
